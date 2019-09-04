@@ -1,0 +1,224 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="zigbee_ota_server_pca10056_s140" target="8" version="2">
+  <project Name="zigbee_ota_server_pca10056_s140">
+    <configuration
+      Name="Common"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M4"
+      arm_endian="Little"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_linker_heap_size="8192"
+      arm_linker_process_stack_size="0"
+      arm_linker_stack_size="8192"
+      arm_linker_treat_warnings_as_errors="No"
+      arm_simulator_memory_simulation_parameter="RWX 00000000,00100000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD"
+      arm_target_device_name="nRF52840_xxAA"
+      arm_target_interface_type="SWD"
+      c_user_include_directories="../../../config;../../../../../../../components;../../../../../../../components/ble/common;../../../../../../../components/boards;../../../../../../../components/libraries/atomic;../../../../../../../components/libraries/atomic_fifo;../../../../../../../components/libraries/balloc;../../../../../../../components/libraries/bootloader;../../../../../../../components/libraries/bootloader/ble_dfu;../../../../../../../components/libraries/bootloader/dfu;../../../../../../../components/libraries/bsp;../../../../../../../components/libraries/button;../../../../../../../components/libraries/cli;../../../../../../../components/libraries/cli/cdc_acm;../../../../../../../components/libraries/cli/rtt;../../../../../../../components/libraries/cli/uart;../../../../../../../components/libraries/crc32;../../../../../../../components/libraries/crypto;../../../../../../../components/libraries/crypto/backend/cc310;../../../../../../../components/libraries/crypto/backend/cc310_bl;../../../../../../../components/libraries/crypto/backend/cifra;../../../../../../../components/libraries/crypto/backend/mbedtls;../../../../../../../components/libraries/crypto/backend/micro_ecc;../../../../../../../components/libraries/crypto/backend/nrf_hw;../../../../../../../components/libraries/crypto/backend/nrf_sw;../../../../../../../components/libraries/crypto/backend/oberon;../../../../../../../components/libraries/crypto/backend/optiga;../../../../../../../components/libraries/delay;../../../../../../../components/libraries/experimental_section_vars;../../../../../../../components/libraries/fstorage;../../../../../../../components/libraries/log;../../../../../../../components/libraries/log/src;../../../../../../../components/libraries/mem_manager;../../../../../../../components/libraries/memobj;../../../../../../../components/libraries/mutex;../../../../../../../components/libraries/pwr_mgmt;../../../../../../../components/libraries/queue;../../../../../../../components/libraries/ringbuf;../../../../../../../components/libraries/scheduler;../../../../../../../components/libraries/stack_info;../../../../../../../components/libraries/strerror;../../../../../../../components/libraries/svc;../../../../../../../components/libraries/timer;../../../../../../../components/libraries/usbd;../../../../../../../components/libraries/usbd/class/cdc;../../../../../../../components/libraries/usbd/class/cdc/acm;../../../../../../../components/libraries/util;../../../../../../../components/softdevice/common;../../../../../../../components/softdevice/mbr/nrf52840/headers;../../../../../../../components/softdevice/s140/headers;../../../../../../../components/softdevice/s140/headers/nrf52;../../../../../../../components/toolchain/cmsis/include;../../../../../../../components/zigbee/cli;../../../../../../../components/zigbee/common;../../../../../../multiprotocol/app_utils;../../..;../../../../../../../external/fnmatch;../../../../../../../external/fprintf;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src/fem;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src/mac_features;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src/mac_features/ack_generator;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src/rsch;../../../../../../../external/nRF-IEEE-802.15.4-radio-driver/src/rsch/raal/softdevice;../../../../../../../external/nano-pb;../../../../../../../external/nrf_cc310/include;../../../../../../../external/nrf_cc310_bl/include;../../../../../../../external/nrf_oberon;../../../../../../../external/nrf_oberon/include;../../../../../../../external/segger_rtt;../../../../../../../external/utf_converter;../../../../../../../external/zboss/addons;../../../../../../../external/zboss/include;../../../../../../../external/zboss/include/ha;../../../../../../../external/zboss/include/osif;../../../../../../../external/zboss/include/zcl;../../../../../../../external/zboss/osif;../../../../../../../external/zboss/zb_error;../../../../../../../integration/nrfx;../../../../../../../integration/nrfx/legacy;../../../../../../../modules/nrfx;../../../../../../../modules/nrfx/drivers/include;../../../../../../../modules/nrfx/hal;../../../../../../../modules/nrfx/mdk;../config;"
+      c_preprocessor_definitions="BLE_STACK_SUPPORT_REQD;BOARD_PCA10056;BOOTLOADER_START_ADDR=BOOTLOADER_ADDRESS;CONFIG_GPIO_AS_PINRESET;DEBUG;DEBUG_NRF;ENABLE_FEM;FLOAT_ABI_HARD;INITIALIZE_USER_SECTIONS;MULTIPROTOCOL_802154_CONFIG_PRESENT;NO_VTOR_CONFIG;NRF52840_XXAA;NRF_BL_SETTINGS_PAGE_PROTECT=0;NRF_DFU_SETTINGS_VERSION=2;NRF_DFU_SVCI_ENABLED;NRF_SD_BLE_API_VERSION=6;S140;SOFTDEVICE_PRESENT;SVC_INTERFACE_CALL_AS_NORMAL_FUNCTION;SWI_DISABLE0;ZB_TRACE_LEVEL=0;ZB_TRACE_MASK=0;ZIGBEE_CLI_DEBUG=1;"
+      debug_target_connection="J-Link"
+      gcc_entry_point="Reset_Handler"
+      macros="CMSIS_CONFIG_TOOL=../../../../../../../external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar"
+      debug_register_definition_file="../../../../../../../modules/nrfx/mdk/nrf52840.svd"
+      debug_additional_load_file="../../../../../../../components/softdevice/s140/hex/s140_nrf52_6.1.1_softdevice.hex"
+      debug_start_from_entry_point_symbol="No"
+      gcc_debugging_level="Level 3"      linker_output_format="hex"
+      linker_printf_width_precision_supported="Yes"
+      linker_printf_fmt_level="long"
+      linker_scanf_fmt_level="long"
+      linker_section_placement_file="flash_placement.xml"
+      linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x100000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x40000;FLASH_START=0x26000;FLASH_SIZE=0xda000;RAM_START=0x20002450;RAM_SIZE=0x3dbb0"
+      linker_section_placements_segments="FLASH RX 0x0 0x100000;RAM RWX 0x20000000 0x40000;bootloader_settings_page RX 0x000FF000 0x1000;uicr_mbr_params_page RX 0x00000FFC 0x4;mbr_params_page RX 0x000FE000 0x1000;uicr_bootloader_start_address RX 0x00000FF8 0x4"
+      project_directory=""
+      project_type="Executable" />
+      <folder Name="Segger Startup Files">
+        <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      </folder>
+    <folder Name="Board Support">
+      <file file_name="../../../../../../../components/libraries/bsp/bsp.c" />
+    </folder>
+    <folder Name="nRF_Log">
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_backend_rtt.c" />
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_backend_serial.c" />
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_backend_uart.c" />
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_default_backends.c" />
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_frontend.c" />
+      <file file_name="../../../../../../../components/libraries/log/src/nrf_log_str_formatter.c" />
+    </folder>
+    <folder Name="nRF_Libraries">
+      <file file_name="../../../../../../../components/libraries/button/app_button.c" />
+      <file file_name="../../../../../../../components/libraries/util/app_error.c" />
+      <file file_name="../../../../../../../components/libraries/util/app_error_handler_gcc.c" />
+      <file file_name="../../../../../../../components/libraries/util/app_error_weak.c" />
+      <file file_name="../../../../../../../components/libraries/scheduler/app_scheduler.c" />
+      <file file_name="../../../../../../../components/libraries/timer/app_timer.c" />
+      <file file_name="../../../../../../../components/libraries/usbd/app_usbd.c" />
+      <file file_name="../../../../../../../components/libraries/usbd/class/cdc/acm/app_usbd_cdc_acm.c" />
+      <file file_name="../../../../../../../components/libraries/usbd/app_usbd_core.c" />
+      <file file_name="../../../../../../../components/libraries/usbd/app_usbd_serial_num.c" />
+      <file file_name="../../../../../../../components/libraries/usbd/app_usbd_string_desc.c" />
+      <file file_name="../../../../../../../components/libraries/util/app_util_platform.c" />
+      <file file_name="../../../../../../../components/libraries/assert/assert.c" />
+      <file file_name="../../../../../../../components/libraries/crc32/crc32.c" />
+      <file file_name="../../../../../../../external/fnmatch/fnmatch.c" />
+      <file file_name="../../../../../../../components/libraries/mem_manager/mem_manager.c" />
+      <file file_name="../../../../../../../components/libraries/util/nrf_assert.c" />
+      <file file_name="../../../../../../../components/libraries/atomic_fifo/nrf_atfifo.c" />
+      <file file_name="../../../../../../../components/libraries/atomic/nrf_atomic.c" />
+      <file file_name="../../../../../../../components/libraries/balloc/nrf_balloc.c" />
+      <file file_name="../../../../../../../components/libraries/cli/nrf_cli.c" />
+      <file file_name="../../../../../../../components/libraries/cli/cdc_acm/nrf_cli_cdc_acm.c" />
+      <file file_name="../../../../../../../components/libraries/cli/rtt/nrf_cli_rtt.c" />
+      <file file_name="../../../../../../../components/libraries/cli/uart/nrf_cli_uart.c" />
+      <file file_name="../../../../../../../external/fprintf/nrf_fprintf.c" />
+      <file file_name="../../../../../../../external/fprintf/nrf_fprintf_format.c" />
+      <file file_name="../../../../../../../components/libraries/fstorage/nrf_fstorage.c" />
+      <file file_name="../../../../../../../components/libraries/fstorage/nrf_fstorage_nvmc.c" />
+      <file file_name="../../../../../../../components/libraries/fstorage/nrf_fstorage_sd.c" />
+      <file file_name="../../../../../../../components/libraries/memobj/nrf_memobj.c" />
+      <file file_name="../../../../../../../components/libraries/pwr_mgmt/nrf_pwr_mgmt.c" />
+      <file file_name="../../../../../../../components/libraries/queue/nrf_queue.c" />
+      <file file_name="../../../../../../../components/libraries/ringbuf/nrf_ringbuf.c" />
+      <file file_name="../../../../../../../components/libraries/experimental_section_vars/nrf_section_iter.c" />
+      <file file_name="../../../../../../../components/libraries/strerror/nrf_strerror.c" />
+    </folder>
+    <folder Name="None">
+      <file file_name="../../../../../../multiprotocol/app_utils/multiprotocol_802154_config.c" />
+      <file file_name="../../../../../../../modules/nrfx/mdk/ses_startup_nrf52840.s" />
+      <file file_name="../../../../../../../modules/nrfx/mdk/ses_startup_nrf_common.s" />
+      <file file_name="../../../../../../../modules/nrfx/mdk/system_nrf52840.c" />
+    </folder>
+    <folder Name="Zigbee">
+      <file file_name="../../../../../../../external/zboss/lib/gcc/libzboss.a" />
+      <file file_name="../../../../../../../external/zboss/lib/gcc/nrf_radio_driver_softdevice.a" />
+      <file file_name="../../../../../../../external/zboss/zb_error/zb_error_to_string.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_common.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_nrf_logger.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_nvram.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_ota.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_sdk_config_deps.c" />
+      <file file_name="../../../../../../../external/zboss/osif/zb_nrf52840_timer.c" />
+      <file file_name="../../../../../../../external/zboss/addons/zcl/zb_zcl_common_addons.c" />
+      <file file_name="../../../../../../../external/zboss/addons/zcl/zb_zcl_ota_upgrade_addons.c" />
+    </folder>
+    <folder Name="nRF_Crypto backend CC310_BL">
+      <file file_name="../../../../../../../components/libraries/crypto/backend/cc310_bl/cc310_bl_backend_ecc.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/cc310_bl/cc310_bl_backend_ecdsa.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/cc310_bl/cc310_bl_backend_hash.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/cc310_bl/cc310_bl_backend_init.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/cc310_bl/cc310_bl_backend_shared.c" />
+    </folder>
+    <folder Name="Board Definition">
+      <file file_name="../../../../../../../components/boards/boards.c" />
+    </folder>
+    <folder Name="nRF_Oberon_Crypto">
+      <file file_name="../../../../../../../external/nrf_oberon/lib/cortex-m4/hard-float/liboberon_2.0.7.a" />
+    </folder>
+    <folder Name="nRF_SoftDevice">
+      <file file_name="../../../../../../../components/softdevice/common/nrf_sdh.c" />
+      <file file_name="../../../../../../../components/softdevice/common/nrf_sdh_ble.c" />
+      <file file_name="../../../../../../../components/softdevice/common/nrf_sdh_soc.c" />
+    </folder>
+    <folder Name="nRF_Drivers">
+      <file file_name="../../../../../../../integration/nrfx/legacy/nrf_drv_clock.c" />
+      <file file_name="../../../../../../../integration/nrfx/legacy/nrf_drv_power.c" />
+      <file file_name="../../../../../../../integration/nrfx/legacy/nrf_drv_rng.c" />
+      <file file_name="../../../../../../../integration/nrfx/legacy/nrf_drv_uart.c" />
+      <file file_name="../../../../../../../modules/nrfx/hal/nrf_ecb.c" />
+      <file file_name="../../../../../../../modules/nrfx/hal/nrf_nvmc.c" />
+      <file file_name="../../../../../../../modules/nrfx/soc/nrfx_atomic.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_clock.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_gpiote.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_power.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/prs/nrfx_prs.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_rng.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_systick.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_timer.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_uart.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_uarte.c" />
+      <file file_name="../../../../../../../modules/nrfx/drivers/src/nrfx_usbd.c" />
+    </folder>
+    <folder Name="nRF_Crypto">
+      <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_ecc.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_ecdsa.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_hash.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_init.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/nrf_crypto_shared.c" />
+    </folder>
+    <folder Name="Application">
+      <file file_name="../../../../../../dfu/dfu_public_key.c" />
+      <file file_name="../../../main.c" />
+      <file file_name="../config/sdk_config.h" />
+    </folder>
+    <folder Name="nRF_SVC">
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_svci.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c" />
+      <file file_name="../../../../../../../components/libraries/svc/nrf_svc_handler.c" />
+    </folder>
+    <folder Name="nRF_Segger_RTT">
+      <file file_name="../../../../../../../external/segger_rtt/SEGGER_RTT.c" />
+      <file file_name="../../../../../../../external/segger_rtt/SEGGER_RTT_Syscalls_SES.c" />
+      <file file_name="../../../../../../../external/segger_rtt/SEGGER_RTT_printf.c" />
+    </folder>
+    <folder Name="nano-pb">
+      <file file_name="../../../../../../../external/nano-pb/pb_common.c" />
+      <file file_name="../../../../../../../external/nano-pb/pb_decode.c" />
+    </folder>
+    <folder Name="nRF_DFU">
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/dfu-cc.pb.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/ble_dfu/nrf_dfu_ble.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_flash.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_handling_error.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_mbr.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_req_handler.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_settings.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_settings_svci.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_transport.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_utils.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_validation.c" />
+      <file file_name="../../../../../../../components/libraries/bootloader/dfu/nrf_dfu_ver_validation.c" />
+    </folder>
+    <folder Name="nRF_BLE">
+      <file file_name="../../../../../../../components/ble/common/ble_srv_common.c" />
+    </folder>
+    <folder Name="nRF_Zigbee">
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_attr.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_attr_report.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_bdb.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_generic_cmd.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_ping.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_radio.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_zcl.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_zdo.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_cmd_zscheduler.c" />
+      <file file_name="../../../../../../../components/zigbee/cli/zigbee_cli_utils.c" />
+      <file file_name="../../../../../../../components/zigbee/common/zigbee_helpers.c" />
+      <file file_name="../../../../../../../components/zigbee/common/zigbee_logger_eprxzcl.c" />
+    </folder>
+    <folder Name="UTF8/UTF16 converter">
+      <file file_name="../../../../../../../external/utf_converter/utf.c" />
+    </folder>
+    <folder Name="nrf_cc310_bl">
+      <file file_name="../../../../../../../external/nrf_cc310_bl/lib/cortex-m4/hard-float/libnrf_cc310_bl_0.9.12.a" />
+    </folder>
+    <folder Name="nRF_Crypto backend Oberon">
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_chacha_poly_aead.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_ecc.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_ecdh.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_ecdsa.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_eddsa.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_hash.c" />
+      <file file_name="../../../../../../../components/libraries/crypto/backend/oberon/oberon_backend_hmac.c" />
+    </folder>
+  </project>
+  <configuration Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_optimization_level="Optimize For Size" />
+  <configuration Name="Debug"
+    c_preprocessor_definitions="DEBUG; DEBUG_NRF"
+    gcc_optimization_level="None"/>
+</solution>
