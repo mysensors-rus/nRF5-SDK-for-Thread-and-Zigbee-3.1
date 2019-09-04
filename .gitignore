@@ -1,0 +1,10 @@
+*.o
+*.d
+*.elf
+*.hex
+*.map
+*.jlink
+*.emSession
+*.msi
+**/Output
+
