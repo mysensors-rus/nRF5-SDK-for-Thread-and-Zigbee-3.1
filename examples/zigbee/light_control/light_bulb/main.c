@@ -68,7 +68,7 @@
 #define MAX_CHILDREN                      10                                    /**< The maximum amount of connected devices. Setting this value to 0 disables association to this device.  */
 #define IEEE_CHANNEL_MASK                 (1l << ZIGBEE_CHANNEL)                /**< Scan only one, predefined channel to find the coordinator. */
 #define HA_DIMMABLE_LIGHT_ENDPOINT        10                                    /**< Device endpoint, used to receive light controlling commands. */
-#define ERASE_PERSISTENT_CONFIG           ZB_FALSE                              /**< Do not erase NVRAM to save the network parameters after device reboot or power-off. */
+#define ERASE_PERSISTENT_CONFIG           ZB_TRUE                              /**< Do not erase NVRAM to save the network parameters after device reboot or power-off. */
 #define BULB_PWM_NAME                     PWM1                                  /**< PWM instance used to drive dimmable light bulb. */
 #define BULB_PWM_TIMER                    2                                     /**< Timer number used by PWM. */
 
@@ -83,6 +83,17 @@
 #define BULB_INIT_BASIC_LOCATION_DESC     "Office desk"                         /**< Describes the physical location of the device (16 bytes). May be modified during commisioning process. */
 #define BULB_INIT_BASIC_PH_ENV            ZB_ZCL_BASIC_ENV_UNSPECIFIED          /**< Describes the type of physical environment. For possible values see section 3.2.2.2.10 of ZCL specification. */
 
+#ifdef MY_NRF52840_DEV_BOARD
+
+#define IDENTIFY_MODE_BSP_EVT             BSP_EVENT_KEY_0                       /**< Button event used to enter the Bulb into the Identify mode. */
+#define ZIGBEE_NETWORK_STATE_LED          BSP_BOARD_LED_0                       /**< LED indicating that light switch successfully joind ZigBee network. */
+#define BULB_LED                          BSP_BOARD_LED_3                       /**< LED immitaing dimmable light bulb. */
+
+#if (APP_BULB_USE_WS2812_LED_CHAIN)
+#define LED_CHAIN_DOUT_PIN                LED_WS2812                 /**< GPIO pin used as DOUT (to be connected to DIN pin of the first ws2812 led in chain) */
+#endif
+
+#else // MY_NRF52840_DEV_BOARD
 #ifdef  BOARD_PCA10059                                                          /**< If it is Dongle */
 #define IDENTIFY_MODE_BSP_EVT             BSP_EVENT_KEY_0                       /**< Button event used to enter the Bulb into the Identify mode. */
 #define ZIGBEE_NETWORK_STATE_LED          BSP_BOARD_LED_0                       /**< LED indicating that light switch successfully joind ZigBee network. */
@@ -95,6 +106,8 @@
 #if (APP_BULB_USE_WS2812_LED_CHAIN)
 #define LED_CHAIN_DOUT_PIN                NRF_GPIO_PIN_MAP(1,7)                 /**< GPIO pin used as DOUT (to be connected to DIN pin of the first ws2812 led in chain) */
 #endif
+#endif // MY_NRF52840_DEV_BOARD
+
 
 /* Declare endpoint for Dimmable Light device with scenes. */
 #define ZB_HA_DECLARE_LIGHT_EP(ep_name, ep_id, cluster_list)                         \
