@@ -4,6 +4,7 @@
 *.hex
 *.map
 *.jlink
+*.emSession
 *.msi
 **/Output
 
