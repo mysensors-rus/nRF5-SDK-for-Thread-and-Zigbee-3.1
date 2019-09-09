@@ -60,118 +60,25 @@
 
 #include "zb_multi_sensor.h"
 #include "nrf_delay.h"
-
-#include "zb_zcl_humm_measurement_addons.h"
-
+#include "main.h"
 
 #define IEEE_CHANNEL_MASK                  (1l << ZIGBEE_CHANNEL)               /**< Scan only one, predefined channel to find the coordinator. */
 #define ERASE_PERSISTENT_CONFIG            ZB_FALSE                             /**< Do not erase NVRAM to save the network parameters after device reboot or power-off. */
 
 #define ZIGBEE_NETWORK_STATE_LED           BSP_BOARD_LED_2                      /**< LED indicating that light switch successfully joind ZigBee network. */
 
-#define MIN_TEMPERATURE_VALUE              0                                    /**< Minimum temperature value as returned by the simulated measurement function. */
-#define MAX_TEMPERATURE_VALUE              4000                                 /**< Maximum temperature value as returned by the simulated measurement function. */
-#define TEMPERATURE_VALUE_INCREMENT        50                                   /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
-#define MIN_PRESSURE_VALUE                 700                                  /**< Minimum pressure value as returned by the simulated measurement function. */
-#define MAX_PRESSURE_VALUE                 1100                                 /**< Maximum pressure value as returned by the simulated measurement function. */
-#define PRESSURE_VALUE_INCREMENT           5                                    /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
+// #define MIN_TEMPERATURE_VALUE              0                                    /**< Minimum temperature value as returned by the simulated measurement function. */
+// #define MAX_TEMPERATURE_VALUE              4000                                 /**< Maximum temperature value as returned by the simulated measurement function. */
+// #define TEMPERATURE_VALUE_INCREMENT        50                                   /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
+// #define MIN_PRESSURE_VALUE                 700                                  /**< Minimum pressure value as returned by the simulated measurement function. */
+// #define MAX_PRESSURE_VALUE                 1100                                 /**< Maximum pressure value as returned by the simulated measurement function. */
+// #define PRESSURE_VALUE_INCREMENT           5                                    /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
 
 #if !defined ZB_ED_ROLE
 #error Define ZB_ED_ROLE to compile End Device source code.
 #endif
 
-// --------------------------------------------------------------------------------------------------
-// По идее это должно быть в SDK - \external\zboss\include\zcl\zb_zcl_rel_humidity_measurement.h 
-// но так как мы стараемся SDK не трогать, то выносим код пока сюда
-
- /* (See: Table 4.13 Temperature Measurement Information Attribute Set) */
-
-/** @brief Tolerance attribute minimum value */
-#define ZB_ZCL_REL_HUMIDITY_MEASUREMENT_TOLERANCE_MIN_VALUE            0x0000
-
-/** @brief Tolerance attribute maximum value */
-#define ZB_ZCL_REL_HUMIDITY_MEASUREMENT_TOLERANCE_MAX_VALUE            0x2710
-
-#define ZB_SET_ATTR_DESCR_WITH_ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_TOLERANCE_ID(data_ptr) \
-{                                                       \
-  ZB_ZCL_ATTR_REL_HUMIDITY_TOLERANCE_ID,    \
-  ZB_ZCL_ATTR_TYPE_U16,                                 \
-  ZB_ZCL_ATTR_ACCESS_READ_ONLY,                         \
-  (zb_voidp_t) data_ptr                                 \
-}
-
-#ifdef ZB_ZCL_DECLARE_REL_HUMIDITY_MEASUREMENT_ATTRIB_LIST
-#undef ZB_ZCL_DECLARE_REL_HUMIDITY_MEASUREMENT_ATTRIB_LIST
-#define ZB_ZCL_DECLARE_REL_HUMIDITY_MEASUREMENT_ATTRIB_LIST(attr_list,          \
-    value, min_value, max_value, tolerance)                                     \
-  ZB_ZCL_START_DECLARE_ATTRIB_LIST(attr_list)                                   \
-  ZB_ZCL_SET_ATTR_DESC(ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_VALUE_ID, (value))          \
-  ZB_ZCL_SET_ATTR_DESC(ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_MIN_VALUE_ID, (min_value))  \
-  ZB_ZCL_SET_ATTR_DESC(ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_MAX_VALUE_ID, (max_value))  \
-  ZB_ZCL_SET_ATTR_DESC(ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_TOLERANCE_ID, (tolerance))  \
-  ZB_ZCL_FINISH_DECLARE_ATTRIB_LIST
-#endif // ZB_ZCL_DECLARE_REL_HUMIDITY_MEASUREMENT_ATTRIB_LIST
-
-// -----------------------------------------------------------------------------------------------
-
-
-static sensor_device_ctx_t m_dev_ctx;
-
-ZB_ZCL_DECLARE_IDENTIFY_ATTRIB_LIST(identify_attr_list, &m_dev_ctx.identify_attr.identify_time);
-
-ZB_ZCL_DECLARE_BASIC_ATTRIB_LIST_EXT(basic_attr_list,
-                                     &m_dev_ctx.basic_attr.zcl_version,
-                                     &m_dev_ctx.basic_attr.app_version,
-                                     &m_dev_ctx.basic_attr.stack_version,
-                                     &m_dev_ctx.basic_attr.hw_version,
-                                     m_dev_ctx.basic_attr.mf_name,
-                                     m_dev_ctx.basic_attr.model_id,
-                                     m_dev_ctx.basic_attr.date_code,
-                                     &m_dev_ctx.basic_attr.power_source,
-                                     m_dev_ctx.basic_attr.location_id,
-                                     &m_dev_ctx.basic_attr.ph_env,
-                                     m_dev_ctx.basic_attr.sw_ver);
-
-
-ZB_ZCL_DECLARE_TEMP_MEASUREMENT_ATTRIB_LIST(temperature_attr_list, 
-                                            &m_dev_ctx.temp_attr.measure_value,
-                                            &m_dev_ctx.temp_attr.min_measure_value, 
-                                            &m_dev_ctx.temp_attr.max_measure_value, 
-                                            &m_dev_ctx.temp_attr.tolerance);
-
-ZB_ZCL_DECLARE_PRES_MEASUREMENT_ATTRIB_LIST(pressure_attr_list, 
-                                            &m_dev_ctx.pres_attr.measure_value, 
-                                            &m_dev_ctx.pres_attr.min_measure_value, 
-                                            &m_dev_ctx.pres_attr.max_measure_value, 
-                                            &m_dev_ctx.pres_attr.tolerance);
-
-ZB_ZCL_DECLARE_REL_HUMIDITY_MEASUREMENT_ATTRIB_LIST(humidity_attr_list, 
-                                            &m_dev_ctx.humm_attr.measure_value,
-                                            &m_dev_ctx.humm_attr.min_measure_value, 
-                                            &m_dev_ctx.humm_attr.max_measure_value,
-                                            &m_dev_ctx.humm_attr.tolerance);
-
-ZB_DECLARE_MULTI_SENSOR_CLUSTER_LIST(multi_sensor_clusters,
-                                     basic_attr_list,
-                                     identify_attr_list,
-                                     temperature_attr_list,
-                                     pressure_attr_list,
-                                     humidity_attr_list);
-
-ZB_ZCL_DECLARE_MULTI_SENSOR_EP(multi_sensor_ep,
-                               MULTI_SENSOR_ENDPOINT,
-                               multi_sensor_clusters);
-
-ZBOSS_DECLARE_DEVICE_CTX_1_EP(multi_sensor_ctx, multi_sensor_ep);
-
-
-//static sensorsim_cfg_t   m_temperature_sim_cfg;                                 /**< Temperature sensor simulator configuration. */
-//static sensorsim_state_t m_temperature_sim_state;                               /**< Temperature sensor simulator state. */
-static sensorsim_cfg_t   m_pressure_sim_cfg;                                    /**< Pressure sensor simulator configuration. */
-static sensorsim_state_t m_pressure_sim_state;                                  /**< Pressure sensor simulator state. */
-
 APP_TIMER_DEF(zb_app_timer);
-
 
 /**@brief Function for the Timer initialization.
  *
@@ -242,12 +149,6 @@ static void multi_sensor_clusters_attr_init(void)
     m_dev_ctx.temp_attr.max_measure_value        = ZB_ZCL_ATTR_TEMP_MEASUREMENT_MAX_VALUE_MAX_VALUE;
     m_dev_ctx.temp_attr.tolerance                = ZB_ZCL_ATTR_TEMP_MEASUREMENT_TOLERANCE_MAX_VALUE;
 
-    /* Pressure measurement cluster attributes data */
-    m_dev_ctx.pres_attr.measure_value            = ZB_ZCL_ATTR_PRES_MEASUREMENT_VALUE_UNKNOWN;
-    m_dev_ctx.pres_attr.min_measure_value        = ZB_ZCL_ATTR_PRES_MEASUREMENT_MIN_VALUE_MIN_VALUE;
-    m_dev_ctx.pres_attr.max_measure_value        = ZB_ZCL_ATTR_PRES_MEASUREMENT_MAX_VALUE_MAX_VALUE;
-    m_dev_ctx.pres_attr.tolerance                = ZB_ZCL_ATTR_PRES_MEASUREMENT_TOLERANCE_MAX_VALUE;
-
     /* humidity measurement cluster attributes data */
     m_dev_ctx.humm_attr.measure_value            = ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_VALUE_UNKNOWN;
     m_dev_ctx.humm_attr.min_measure_value        = ZB_ZCL_ATTR_REL_HUMIDITY_MEASUREMENT_MIN_VALUE_MIN_VALUE;
@@ -281,7 +182,7 @@ static void zb_app_timer_handler(void * context)
     static zb_int16_t new_temp_value, new_pres_value, new_hum_value;
 
     /* Get new temperature measured value */
-    double temp_x = hdc1080_get_temp();
+    double temp_x = hdc1080_get_temp();     // РџРѕР»СѓС‡Р°РµРј С‚РµРјРїРµСЂР°С‚СѓСЂСѓ
     NRF_LOG_INFO("device temp data %x", temp_x);
     new_temp_value = (zb_int16_t)(((temp_x/65536)*165-40)*100);
     zcl_status = zb_zcl_set_attr_val(MULTI_SENSOR_ENDPOINT, 
@@ -295,24 +196,7 @@ static void zb_app_timer_handler(void * context)
         NRF_LOG_INFO("Set temperature value fail. zcl_status: %d", zcl_status);
     }
 
-    /* Get new pressure measured value */
-
-
-    new_pres_value = (zb_int16_t)sensorsim_measure(&m_pressure_sim_state, &m_pressure_sim_cfg);
-    zcl_status = zb_zcl_set_attr_val(MULTI_SENSOR_ENDPOINT,
-                                     ZB_ZCL_CLUSTER_ID_PRESSURE_MEASUREMENT, 
-                                     ZB_ZCL_CLUSTER_SERVER_ROLE, 
-                                     ZB_ZCL_ATTR_PRES_MEASUREMENT_VALUE_ID, 
-                                     (zb_uint8_t *)&new_pres_value, 
-                                     ZB_FALSE);
-    if(zcl_status != ZB_ZCL_STATUS_SUCCESS)
-    {
-        NRF_LOG_INFO("Set pressure value fail. zcl_status: %d", zcl_status);
-    }
-
-    /* @mluvke ii?eiee!!!  */
-
-    double humm_x = hdc1080_get_hum();
+    double humm_x = hdc1080_get_hum();  // РџРѕР»СѓС‡Р°РµРј РІР»Р°Р¶РЅРѕСЃС‚СЊ
     NRF_LOG_INFO("device humm data %x", humm_x);
     new_hum_value = (zb_int16_t)((humm_x*10000)/65536); 
     zcl_status = zb_zcl_set_attr_val(MULTI_SENSOR_ENDPOINT,
@@ -336,20 +220,6 @@ static void sensor_init(void)
      I2C_init();
      hdc1080_init();
 
-
-//    m_temperature_sim_cfg.min          = MIN_TEMPERATURE_VALUE;
-//    m_temperature_sim_cfg.max          = MAX_TEMPERATURE_VALUE;
-//    m_temperature_sim_cfg.incr         = TEMPERATURE_VALUE_INCREMENT;
-//    m_temperature_sim_cfg.start_at_max = false;
-//
-//    sensorsim_init(&m_temperature_sim_state, &m_temperature_sim_cfg);
-//
-//    m_pressure_sim_cfg.min          = MIN_PRESSURE_VALUE;
-//    m_pressure_sim_cfg.max          = MAX_PRESSURE_VALUE;
-//    m_pressure_sim_cfg.incr         = PRESSURE_VALUE_INCREMENT;
-//    m_pressure_sim_cfg.start_at_max = false;
-//
-//    sensorsim_init(&m_pressure_sim_state, &m_pressure_sim_cfg);
 }
 
 
@@ -373,7 +243,7 @@ void zboss_signal_handler(zb_uint8_t param)
                 NRF_LOG_INFO("Joined network successfully");
                 zb_zdo_pim_set_long_poll_interval(10000);
                 bsp_board_led_on(ZIGBEE_NETWORK_STATE_LED);
-                ret_code_t err_code = app_timer_start(zb_app_timer, APP_TIMER_TICKS(1000), NULL);
+                ret_code_t err_code = app_timer_start(zb_app_timer, APP_TIMER_TICKS(5000), NULL);
                 APP_ERROR_CHECK(err_code);
             }
             else
@@ -437,10 +307,7 @@ int main(void)
     timers_init();
     log_init();
     leds_init();
-
-    sensor_init();  // Производим инициализацию всех наших сенсоров
-    NRF_LOG_INFO("I2C started");
-
+    sensor_init();  // РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј РїРµСЂРµС„РµСЂРёСЋ
 
     /* Create Timer for reporting attribute */
     err_code = app_timer_create(&zb_app_timer, APP_TIMER_MODE_REPEATED, zb_app_timer_handler);
@@ -452,7 +319,7 @@ int main(void)
     ZB_SET_TRAF_DUMP_OFF();
 
     /* Initialize ZigBee stack. */
-    ZB_INIT("multi_sensor");
+    ZB_INIT("multi_sensor_hdc1080");
 
     /* Set device address to the value read from FICR registers. */
     zb_osif_get_ieee_eui64(ieee_addr);
