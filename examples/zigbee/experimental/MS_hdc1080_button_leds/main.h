@@ -102,8 +102,8 @@ ZB_ZCL_DECLARE_MULTI_SENSOR_EP(multi_sensor_ep,
 /* Main application customizable context. Stores all settings and static values. */
 typedef struct
 {
-    // zb_zcl_basic_attrs_ext_t         basic_attr;
-    // zb_zcl_identify_attrs_t          identify_attr;
+    zb_zcl_basic_attrs_ext_t         basic_attr;
+    zb_zcl_identify_attrs_t          identify_attr;
     zb_zcl_scenes_attrs_t            scenes_attr;
     zb_zcl_groups_attrs_t            groups_attr;
     zb_zcl_on_off_attrs_ext_t        on_off_attr;
@@ -111,7 +111,7 @@ typedef struct
 } bulb_device_ctx_t;
 
 
-APP_PWM_INSTANCE(BULB_PWM_NAME, BULB_PWM_TIMER);
+
 static bulb_device_ctx_t m_bulb_dev_ctx;
 
 //ZB_ZCL_DECLARE_IDENTIFY_ATTRIB_LIST(identify_attr_list, &m_dev_ctx.identify_attr.identify_time);
@@ -161,8 +161,8 @@ ZB_HA_DECLARE_LIGHT_EP(dimmable_light_ep,
                        HA_DIMMABLE_LIGHT_ENDPOINT,
                        dimmable_light_clusters);
 
-// ZB_HA_DECLARE_DIMMABLE_LIGHT_CTX(dimmable_light_ctx,
-//                                  dimmable_light_ep);
+ZB_HA_DECLARE_DIMMABLE_LIGHT_CTX(dimmable_light_ctx,
+                                  dimmable_light_ep);
 
 #if (APP_BULB_USE_WS2812_LED_CHAIN)
 /**@brief Timer responsible for triggering periodic led chain refresh */

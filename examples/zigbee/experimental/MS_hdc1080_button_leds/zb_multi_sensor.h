@@ -79,8 +79,6 @@ typedef struct
     zb_zcl_humm_measurement_attrs_t     humm_attr;
 } sensor_device_ctx_t;
 
-
-
 #define ZB_MULTI_SENSOR_REPORT_ATTR_COUNT  4                                    /**< Number of attributes mandatory for reporting in the Temperature and Pressure Measurement cluster. */
 #define ZB_DEVICE_VER_MULTI_SENSOR         0                                    /**< Multisensor device version. */
 #define ZB_MULTI_SENSOR_IN_CLUSTER_NUM     4                                    /**< Number of the input (server) clusters in the multisensor device. */
@@ -187,6 +185,8 @@ typedef struct
       cluster_list,                                                               \
       (zb_af_simple_desc_1_1_t*)&simple_desc_##ep_name,                           \
       ZB_MULTI_SENSOR_REPORT_ATTR_COUNT, reporting_info## device_ctx_name, 0, NULL)
+
+
 
 
 #ifdef __cplusplus
