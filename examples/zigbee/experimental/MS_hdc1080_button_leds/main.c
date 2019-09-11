@@ -58,21 +58,60 @@
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#include "drv_ws2812.h"
+
 #include "zb_multi_sensor.h"
 #include "nrf_delay.h"
+
 #include "main.h"
 
+
 #define IEEE_CHANNEL_MASK                  (1l << ZIGBEE_CHANNEL)               /**< Scan only one, predefined channel to find the coordinator. */
-#define ERASE_PERSISTENT_CONFIG            ZB_FALSE                             /**< Do not erase NVRAM to save the network parameters after device reboot or power-off. */
+#define ERASE_PERSISTENT_CONFIG           ZB_TRUE                              /**< Do not erase NVRAM to save the network parameters after device reboot or power-off. */
 
-#define ZIGBEE_NETWORK_STATE_LED           BSP_BOARD_LED_2                      /**< LED indicating that light switch successfully joind ZigBee network. */
 
-// #define MIN_TEMPERATURE_VALUE              0                                    /**< Minimum temperature value as returned by the simulated measurement function. */
-// #define MAX_TEMPERATURE_VALUE              4000                                 /**< Maximum temperature value as returned by the simulated measurement function. */
-// #define TEMPERATURE_VALUE_INCREMENT        50                                   /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
-// #define MIN_PRESSURE_VALUE                 700                                  /**< Minimum pressure value as returned by the simulated measurement function. */
-// #define MAX_PRESSURE_VALUE                 1100                                 /**< Maximum pressure value as returned by the simulated measurement function. */
-// #define PRESSURE_VALUE_INCREMENT           5                                    /**< Value by which the temperature value is incremented/decremented for each call to the simulated measurement function. */
+// --------------------  BULB -----------------------------------
+#define MAX_CHILDREN                      10                                    /**< The maximum amount of connected devices. Setting this value to 0 disables association to this device.  */
+
+#define BULB_PWM_NAME                     PWM1                                  /**< PWM instance used to drive dimmable light bulb. */
+#define BULB_PWM_TIMER                    2                                     /**< Timer number used by PWM. */
+
+/* Basic cluster attributes initial values. */
+#define BULB_INIT_BASIC_APP_VERSION       01                                    /**< Version of the application software (1 byte). */
+#define BULB_INIT_BASIC_STACK_VERSION     10                                    /**< Version of the implementation of the ZigBee stack (1 byte). */
+#define BULB_INIT_BASIC_HW_VERSION        11                                    /**< Version of the hardware of the device (1 byte). */
+#define BULB_INIT_BASIC_MANUF_NAME        "Nordic"                              /**< Manufacturer name (32 bytes). */
+#define BULB_INIT_BASIC_MODEL_ID          "Dimable_Light_v0.1"                  /**< Model number assigned by manufacturer (32-bytes long string). */
+#define BULB_INIT_BASIC_DATE_CODE         "20180416"                            /**< First 8 bytes specify the date of manufacturer of the device in ISO 8601 format (YYYYMMDD). The rest (8 bytes) are manufacturer specific. */
+#define BULB_INIT_BASIC_POWER_SOURCE      ZB_ZCL_BASIC_POWER_SOURCE_DC_SOURCE   /**< Type of power sources available for the device. For possible values see section 3.2.2.2.8 of ZCL specification. */
+#define BULB_INIT_BASIC_LOCATION_DESC     "Office desk"                         /**< Describes the physical location of the device (16 bytes). May be modified during commisioning process. */
+#define BULB_INIT_BASIC_PH_ENV            ZB_ZCL_BASIC_ENV_UNSPECIFIED          /**< Describes the type of physical environment. For possible values see section 3.2.2.2.10 of ZCL specification. */
+
+#ifdef MY_NRF52840_DEV_BOARD
+
+#define IDENTIFY_MODE_BSP_EVT             BSP_EVENT_KEY_0                       /**< Button event used to enter the Bulb into the Identify mode. */
+#define ZIGBEE_NETWORK_STATE_LED          BSP_BOARD_LED_0                       /**< LED indicating that light switch successfully joind ZigBee network. */
+#define BULB_LED                          BSP_BOARD_LED_3                       /**< LED immitaing dimmable light bulb. */
+
+#if (APP_BULB_USE_WS2812_LED_CHAIN)
+#define LED_CHAIN_DOUT_PIN                LED_WS2812                 /**< GPIO pin used as DOUT (to be connected to DIN pin of the first ws2812 led in chain) */
+#endif
+
+#else // MY_NRF52840_DEV_BOARD
+#ifdef  BOARD_PCA10059                                                          /**< If it is Dongle */
+#define IDENTIFY_MODE_BSP_EVT             BSP_EVENT_KEY_0                       /**< Button event used to enter the Bulb into the Identify mode. */
+#define ZIGBEE_NETWORK_STATE_LED          BSP_BOARD_LED_0                       /**< LED indicating that light switch successfully joind ZigBee network. */
+#else
+#define IDENTIFY_MODE_BSP_EVT             BSP_EVENT_KEY_3                       /**< Button event used to enter the Bulb into the Identify mode. */
+#define ZIGBEE_NETWORK_STATE_LED          BSP_BOARD_LED_2                       /**< LED indicating that light switch successfully joind ZigBee network. */
+#endif
+#define BULB_LED                          BSP_BOARD_LED_3                       /**< LED immitaing dimmable light bulb. */
+
+#if (APP_BULB_USE_WS2812_LED_CHAIN)
+#define LED_CHAIN_DOUT_PIN                NRF_GPIO_PIN_MAP(1,7)                 /**< GPIO pin used as DOUT (to be connected to DIN pin of the first ws2812 led in chain) */
+#endif
+#endif // MY_NRF52840_DEV_BOARD
+
 
 #if !defined ZB_ED_ROLE
 #error Define ZB_ED_ROLE to compile End Device source code.

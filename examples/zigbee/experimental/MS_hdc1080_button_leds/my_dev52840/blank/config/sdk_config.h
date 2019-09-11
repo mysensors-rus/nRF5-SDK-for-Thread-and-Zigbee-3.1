@@ -46,6 +46,45 @@
 #ifdef USE_APP_CONFIG
 #include "app_config.h"
 #endif
+
+// <h> Application 
+
+//==========================================================
+// <o> APP_BULB_USE_WS2812_LED_CHAIN - Configures the application to use the WS2812 LED chain as bulb (for example, the Adafruit NeoPixel Shield (for Arduino)). 
+#ifndef APP_BULB_USE_WS2812_LED_CHAIN
+#define APP_BULB_USE_WS2812_LED_CHAIN 1
+#endif
+
+// </h> 
+//==========================================================
+
+// <h> Example 
+
+//==========================================================
+// <h> ws2812 - WS2812 led chain driver
+
+//==========================================================
+// <o> DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX - Maximum number of the WS2812 LEDs in chain supported by the WS2812 driver. 
+#ifndef DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX
+#define DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX 9
+#endif
+
+// <o> DRV_WS2812_PWM_INSTANCE_NO - Number of the nrfx PWM instance used by the WS2812 driver. 
+// <i> When DRV_WS2812_PWM_INSTANCE_NO == 0 define PWM0_ENABLED to 1
+// <i> When DRV_WS2812_PWM_INSTANCE_NO == 1 define PWM1_ENABLED to 1
+// <i> etc.
+
+#ifndef DRV_WS2812_PWM_INSTANCE_NO
+#define DRV_WS2812_PWM_INSTANCE_NO 0
+#endif
+
+// </h> 
+//==========================================================
+
+// </h> 
+//==========================================================
+
+
 // <h> Zigbee 
 
 //==========================================================
@@ -421,6 +460,185 @@
 // </e>
 
 // </e>
+
+// <e> NRFX_PWM_ENABLED - nrfx_pwm - PWM peripheral driver
+//==========================================================
+#ifndef NRFX_PWM_ENABLED
+#define NRFX_PWM_ENABLED 1
+#endif
+// <q> NRFX_PWM0_ENABLED  - Enable PWM0 instance
+ 
+
+#ifndef NRFX_PWM0_ENABLED
+#define NRFX_PWM0_ENABLED 1
+#endif
+
+// <q> NRFX_PWM1_ENABLED  - Enable PWM1 instance
+ 
+
+#ifndef NRFX_PWM1_ENABLED
+#define NRFX_PWM1_ENABLED 0
+#endif
+
+// <q> NRFX_PWM2_ENABLED  - Enable PWM2 instance
+ 
+
+#ifndef NRFX_PWM2_ENABLED
+#define NRFX_PWM2_ENABLED 0
+#endif
+
+// <q> NRFX_PWM3_ENABLED  - Enable PWM3 instance
+ 
+
+#ifndef NRFX_PWM3_ENABLED
+#define NRFX_PWM3_ENABLED 0
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN - Out0 pin  <0-31> 
+
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN 31
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN - Out1 pin  <0-31> 
+
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN 31
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN - Out2 pin  <0-31> 
+
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN 31
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN - Out3 pin  <0-31> 
+
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN 31
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK  - Base clock
+ 
+// <0=> 16 MHz 
+// <1=> 8 MHz 
+// <2=> 4 MHz 
+// <3=> 2 MHz 
+// <4=> 1 MHz 
+// <5=> 500 kHz 
+// <6=> 250 kHz 
+// <7=> 125 kHz 
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK
+#define NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK 4
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE  - Count mode
+ 
+// <0=> Up 
+// <1=> Up and Down 
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE 0
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE - Top value 
+#ifndef NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE
+#define NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE 1000
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE  - Load mode
+ 
+// <0=> Common 
+// <1=> Grouped 
+// <2=> Individual 
+// <3=> Waveform 
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE 0
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_STEP_MODE  - Step mode
+ 
+// <0=> Auto 
+// <1=> Triggered 
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_STEP_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_STEP_MODE 0
+#endif
+
+// <o> NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY
+#define NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY 6
+#endif
+
+// <e> NRFX_PWM_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRFX_PWM_CONFIG_LOG_ENABLED
+#define NRFX_PWM_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRFX_PWM_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRFX_PWM_CONFIG_LOG_LEVEL
+#define NRFX_PWM_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRFX_PWM_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_PWM_CONFIG_INFO_COLOR
+#define NRFX_PWM_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRFX_PWM_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRFX_PWM_CONFIG_DEBUG_COLOR
+#define NRFX_PWM_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// </e>
+
 
 // <e> NRFX_RNG_ENABLED - nrfx_rng - RNG peripheral driver
 //==========================================================
