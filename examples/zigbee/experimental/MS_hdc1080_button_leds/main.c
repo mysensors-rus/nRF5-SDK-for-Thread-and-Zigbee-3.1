@@ -712,7 +712,7 @@ int main(void)
     ZB_AF_REGISTER_DEVICE_CTX(&multi_sensor_ctx);
 
  /* Register dimmer switch device context (endpoints). */
-    ZB_AF_REGISTER_DEVICE_CTX(&dimmable_light_ctx);
+    //ZB_AF_REGISTER_DEVICE_CTX(&dimmable_light_ctx);
 
     /* Initialize sensor device attibutes */
     multi_sensor_clusters_attr_init();
