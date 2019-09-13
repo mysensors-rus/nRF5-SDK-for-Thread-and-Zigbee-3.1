@@ -65,7 +65,7 @@
 //==========================================================
 // <o> DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX - Maximum number of the WS2812 LEDs in chain supported by the WS2812 driver. 
 #ifndef DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX
-#define DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX 40
+#define DRV_WS2812_LED_CHAIN_PIXELS_COUNT_MAX 9
 #endif
 
 // <o> DRV_WS2812_PWM_INSTANCE_NO - Number of the nrfx PWM instance used by the WS2812 driver. 
@@ -1946,7 +1946,7 @@
 // <268435456=> 1000000 baud 
 
 #ifndef NRF_LOG_BACKEND_UART_BAUDRATE
-#define NRF_LOG_BACKEND_UART_BAUDRATE 268435456
+#define NRF_LOG_BACKEND_UART_BAUDRATE 30801920
 #endif
 
 // <o> NRF_LOG_BACKEND_UART_TEMP_BUFFER_SIZE - Size of buffer for partially processed strings. 
@@ -4920,115 +4920,7 @@
 #ifndef NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED
 #define NRF_LOG_STR_FORMATTER_TIMESTAMP_FORMAT_ENABLED 1
 #endif
-
 // </h> 
-//==========================================================
-
-//==========================================================
-
-// <e> NRFX_TWIM_ENABLED - nrfx_twim - TWIM peripheral driver
-//==========================================================
-#ifndef NRFX_TWIM_ENABLED
-#define NRFX_TWIM_ENABLED 1
-#endif
-// <q> NRFX_TWIM0_ENABLED  - Enable TWIM0 instance
- 
-
-#ifndef NRFX_TWIM0_ENABLED
-#define NRFX_TWIM0_ENABLED 0
-#endif
-
-// <q> NRFX_TWIM1_ENABLED  - Enable TWIM1 instance
- 
-
-#ifndef NRFX_TWIM1_ENABLED
-#define NRFX_TWIM1_ENABLED 0
-#endif
-
-// <o> NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY  - Frequency
- 
-// <26738688=> 100k 
-// <67108864=> 250k 
-// <104857600=> 400k 
-
-#ifndef NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY
-#define NRFX_TWIM_DEFAULT_CONFIG_FREQUENCY 26738688
-#endif
-
-// <q> NRFX_TWIM_DEFAULT_CONFIG_HOLD_BUS_UNINIT  - Enables bus holding after uninit
- 
-
-#ifndef NRFX_TWIM_DEFAULT_CONFIG_HOLD_BUS_UNINIT
-#define NRFX_TWIM_DEFAULT_CONFIG_HOLD_BUS_UNINIT 0
-#endif
-
-// <o> NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
- 
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
-
-#ifndef NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY
-#define NRFX_TWIM_DEFAULT_CONFIG_IRQ_PRIORITY 6
-#endif
-
-// <e> NRFX_TWIM_CONFIG_LOG_ENABLED - Enables logging in the module.
-//==========================================================
-#ifndef NRFX_TWIM_CONFIG_LOG_ENABLED
-#define NRFX_TWIM_CONFIG_LOG_ENABLED 0
-#endif
-// <o> NRFX_TWIM_CONFIG_LOG_LEVEL  - Default Severity level
- 
-// <0=> Off 
-// <1=> Error 
-// <2=> Warning 
-// <3=> Info 
-// <4=> Debug 
-
-#ifndef NRFX_TWIM_CONFIG_LOG_LEVEL
-#define NRFX_TWIM_CONFIG_LOG_LEVEL 3
-#endif
-
-// <o> NRFX_TWIM_CONFIG_INFO_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef NRFX_TWIM_CONFIG_INFO_COLOR
-#define NRFX_TWIM_CONFIG_INFO_COLOR 0
-#endif
-
-// <o> NRFX_TWIM_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
- 
-// <0=> Default 
-// <1=> Black 
-// <2=> Red 
-// <3=> Green 
-// <4=> Yellow 
-// <5=> Blue 
-// <6=> Magenta 
-// <7=> Cyan 
-// <8=> White 
-
-#ifndef NRFX_TWIM_CONFIG_DEBUG_COLOR
-#define NRFX_TWIM_CONFIG_DEBUG_COLOR 0
-#endif
-
-// </e>
-
-// </e>
 
 // <e> TWI_ENABLED - nrf_drv_twi - TWI/TWIM peripheral driver - legacy layer
 //==========================================================
@@ -5210,6 +5102,7 @@
 
 // </e>
 
+//==========================================================
 
 // <<< end of configuration section >>>
 #endif //SDK_CONFIG_H
